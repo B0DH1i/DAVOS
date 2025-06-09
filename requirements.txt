@@ -1,0 +1,30 @@
+# Core ML/DL & Dependencies
+tensorflow==2.10.1
+scikit-learn>=1.2.2
+h5py
+transformers>=4.0.0
+torch>=1.8.0
+torchaudio>=0.8.0
+
+# Data Handling
+pandas>=1.5.3
+numpy>=1.23.5,<2.0
+
+# Web UI
+gradio>=4.0.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.10.3
+pygame>=2.5.0
+PyAudio>=0.2.13
+audiomentations>=0.16.0
+pydub
+
+# Image Processing
+opencv-python-headless
+Pillow>=9.5.0
+
+# Plotting & Utilities
+matplotlib>=3.7.1
+tqdm>=4.62.0

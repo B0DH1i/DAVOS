@@ -1,0 +1,102 @@
+[
+  {
+    "id": "bach_air_g_string",
+    "title": "Air on the G String",
+    "artist": "Johann Sebastian Bach",
+    "album": "Orchestral Suite No. 3 in D major, BWV 1068",
+    "filename": "Air on the G String.mp3",
+    "duration_seconds": 300,
+    "primary_mood_tags": ["calm", "relaxing", "serene"],
+    "target_states": ["deep_relaxation_alpha", "secure_calm", "calm_focus"]
+  },
+  {
+    "id": "pachelbel_canon_d",
+    "title": "Canon in D Major",
+    "artist": "Johann Pachelbel",
+    "album": "Canon and Gigue in D",
+    "filename": "Pachelbel-Canon-in-D-chosic.com_.mp3",
+    "duration_seconds": 350,
+    "primary_mood_tags": ["calm", "peaceful", "gentle_uplift"],
+    "target_states": ["gentle_uplift", "secure_calm"]
+  },
+  {
+    "id": "satie_gymnopedie_no1",
+    "title": "Gymnopédie No. 1",
+    "artist": "Erik Satie",
+    "album": "Trois Gymnopédies",
+    "filename": "Erik Satie - Gymnopédie No.1.mp3",
+    "duration_seconds": 180,
+    "primary_mood_tags": ["calm_focus", "melancholic", "peaceful"],
+    "target_states": ["calm_focus", "secure_calm"]
+  },
+  {
+    "id": "debussy_clair_de_lune",
+    "title": "Clair de Lune",
+    "artist": "Claude Debussy",
+    "album": "Suite bergamasque",
+    "filename": "Debussy-Clair-de-Lune-chosic.com_.mp3",
+    "duration_seconds": 300,
+    "primary_mood_tags": ["dreamy", "relaxing", "beautiful"],
+    "target_states": ["deep_relaxation_alpha", "secure_calm"]
+  },
+  {
+    "id": "mozart_piano_concerto_21_andante",
+    "title": "Piano Concerto No. 21, K. 467 - II. Andante",
+    "artist": "Wolfgang Amadeus Mozart",
+    "album": "Mozart Piano Concertos",
+    "filename": "Piano-Concerto-no.-21-in-C-major-K.-467-II.-Andante(chosic.com).mp3",
+    "duration_seconds": 420,
+    "primary_mood_tags": ["calm_focus", "elegant", "peaceful"],
+    "target_states": ["calm_focus", "deep_relaxation_alpha"]
+  },
+  {
+    "id": "chopin_nocturne_op9_no2",
+    "title": "Nocturne in E-flat Major, Op. 9 No. 2",
+    "artist": "Frédéric Chopin",
+    "album": "Nocturnes, Op. 9",
+    "filename": "02NocturneForPianoNo.2InEFlatMajormurmuresDeLaSeine2Op.9_2B.5....mp3",
+    "duration_seconds": 260,
+    "primary_mood_tags": ["calm", "reflective", "romantic"],
+    "target_states": ["secure_calm", "calm_focus"]
+  },
+  {
+    "id": "grieg_morning_mood",
+    "title": "Morning Mood (from Peer Gynt Suite No. 1)",
+    "artist": "Edvard Grieg",
+    "album": "Peer Gynt, Op. 23",
+    "filename": "Grieg-Morning-Mood-Peer-Gynt-chosic.com_.mp3",
+    "duration_seconds": 240,
+    "primary_mood_tags": ["gentle_uplift", "peaceful", "optimistic"],
+    "target_states": ["gentle_uplift", "calm_focus"]
+  },
+  {
+    "id": "faure_pavane",
+    "title": "Pavane, Op. 50",
+    "artist": "Gabriel Fauré",
+    "album": "Fauré Orchestral Works",
+    "filename": "Gabriel Faure - Pavane, op 50 (Il Divo).mp3",
+    "duration_seconds": 360,
+    "primary_mood_tags": ["calm", "graceful", "melancholic"],
+    "target_states": ["secure_calm", "calm_focus"]
+  },
+  {
+    "id": "nature_gentle_rain",
+    "title": "Gentle Rain Sounds (Loopable)",
+    "artist": "Nature Sounds",
+    "album": "Relaxing Nature",
+    "filename": "gentle-rain-sound-51799.mp3",
+    "duration_seconds": 1800, 
+    "primary_mood_tags": ["relaxing", "natural", "sleep_aid"],
+    "target_states": ["deep_relaxation_alpha", "deep_relaxation_theta", "secure_calm"]
+  },
+  {
+    "id": "ambient_alpha_drone",
+    "title": "Ambient Alpha Wave Drone (10Hz)",
+    "artist": "Sound Therapy Creation",
+    "album": "Brainwave Entrainment Series",
+    "filename": "space-ambient-351305.mp3",
+    "duration_seconds": 900,
+    "primary_mood_tags": ["focus", "meditative", "alpha_support"],
+    "target_states": ["deep_relaxation_alpha", "calm_focus"]
+  }
+] 

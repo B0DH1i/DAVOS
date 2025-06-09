@@ -1,0 +1,17 @@
+# Ignore virtual environments, especially the one in the parent directory
+../.venv-tf210-py310-gpu/
+.venv/
+venv/
+__pycache__/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore log files
+*.log
+logs/ 
