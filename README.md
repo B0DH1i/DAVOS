@@ -1,31 +1,103 @@
 ---
-title: DAVOS - Duygu Analizi ve Verimlilik Otomasyon Sistemi
-emoji: 🧠🎧
-colorFrom: blue
-colorTo: green
+title: DAVOS - Emotion Analysis and Productivity Automation System
+emoji: 🧠
+colorFrom: green
+colorTo: blue
 sdk: gradio
-sdk_version: 4.31.0
-app_file: duygu_verimlilik_projesi/gui_main.py
+app_file: gui_main.py
 pinned: false
+sdk_version: 5.33.0
 ---
 
-# DAVOS - Duygu Analizi ve Verimlilik Otomasyon Sistemi
+# DAVOS - Emotion Analysis and Productivity Automation System
 
-Bu proje, canlı kamera ve mikrofon girdilerini kullanarak yüz ve ses ifadelerinden duygu analizi yapar. Tespit edilen duygu durumuna göre proaktif olarak rahatlatıcı veya motive edici müzik/binaural ritimler çalarak kullanıcının verimliliğini ve ruh halini iyileştirmeyi hedefler.
+DAVOS is an advanced AI system that analyzes emotions in real-time using facial expressions and vocal cues to enhance user productivity and emotional well-being. The system proactively intervenes by playing appropriate music or binaural beats based on the detected emotional state.
 
-## 🚀 Temel Özellikler
+## 🚀 Key Features
 
-*   **Çoklu Model Entegrasyonu:**
-    *   Yüz Tespiti (DNN Modeli)
-    *   Yüz İfadesinden Duygu Tanıma (FER - VGG16)
-    *   Sesten Duygu Tanıma (SER - Whisper Tabanlı)
-*   **Proaktif Müdahale:** Tespit edilen duyguya (örn: stresli, yorgun) göre `Lazanov Müzik Kütüphanesi`'nden uygun sesleri otomatik olarak çalar.
-*   **İki Farklı Çalışma Modu:**
-    1.  `gui_main.py`: İnteraktif bir Gradio arayüzü ile anlık test ve analiz.
-    2.  `main_live_controller.py`: Arka planda sürekli çalışan tam otomatik analiz ve müdahale sistemi.
+### Multi-Modal Emotion Analysis
+- **Face Detection**: Real-time facial detection using DNN model
+- **Facial Emotion Recognition (FER)**: Emotion classification using VGG16 architecture
+- **Speech Emotion Recognition (SER)**: Voice-based emotion analysis using Whisper model
 
-## 🛠️ Kurulum ve Çalıştırma (Hugging Face)
+### Smart Intervention System
+- **Proactive Music Selection**: Automatically plays suitable sounds from the Lazanov Music Library
+- **Emotion-Based Adaptation**: Adjusts audio output based on detected emotional states (e.g., stress, fatigue)
+- **Real-time Processing**: Continuous monitoring and instant response to emotional changes
 
-Bu Space, GitHub deposundan otomatik olarak oluşturulmuştur. Gerekli tüm Python kütüphaneleri `requirements.txt` ve sistem bağımlılıkları (`ffmpeg`) `packages.txt` dosyaları aracılığıyla yüklenir.
+### Dual Operation Modes
+1. **Interactive Mode** (`gui_main.py`):
+   - User-friendly Gradio interface
+   - Real-time emotion analysis visualization
+   - Manual control and testing capabilities
 
-Uygulamanın çalışması için herhangi bir ek adım gerekmemektedir. Gradio arayüzünün yüklenmesini beklemeniz yeterlidir. 
+2. **Automated Mode** (`main_live_controller.py`):
+   - Background operation
+   - Continuous monitoring
+   - Automatic intervention system
+
+## 🛠️ Installation and Setup
+
+### Prerequisites
+- Python 3.8+
+- FFmpeg for audio processing
+- Webcam and microphone access
+
+### System Dependencies
+Install required system packages:
+```bash
+sudo apt-get update
+sudo apt-get install ffmpeg portaudio19-dev libportaudio2
+```
+
+### Python Dependencies
+Install required Python packages:
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Application
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/DAVOS.git
+cd DAVOS
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the application:
+   - For interactive mode:
+   ```bash
+   python gui_main.py
+   ```
+   - For automated mode:
+   ```bash
+   python main_live_controller.py
+   ```
+
+## 📁 Project Structure
+```
+DAVOS/
+├── src/                    # Source code
+├── data/                   # Data files
+├── trained_models/         # Pre-trained models
+├── plots/                  # Generated plots
+├── logs/                   # Log files
+├── gui_main.py            # Interactive mode interface
+├── main_live_controller.py # Automated mode controller
+├── requirements.txt        # Python dependencies
+└── packages.txt           # System dependencies
+```
+
+## 📝 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/DAVOS/issues).
+
+## 📫 Contact
+For any questions or suggestions, please open an issue in the repository.

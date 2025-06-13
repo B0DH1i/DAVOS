@@ -1,38 +1,32 @@
 import numpy as np
 import collections
 
-# Göreli importlar
+# Relative imports
 from ..utils.logging_utils import setup_logger
 from ..configs import main_config as config
 
-# Logger'ı bu modül için kur
+# Setup logger for this module
 logger = setup_logger(__name__, log_file=config.APPLICATION_LOG_FILE)
 
-# Zamansal düzeltme için olasılık geçmişini saklayacak global bir deque.
-# MAX_HISTORY_LENGTH config dosyasından alınacak.
-# Bu, modül seviyesinde state tutar. Alternatif olarak, bir sınıf içinde yönetilebilir.
+
 PROBABILITY_HISTORY = collections.deque(maxlen=config.TEMPORAL_SMOOTHING_WINDOW_SIZE)
 
 
 def _map_source_probs_to_target_vector(source_probs_dict, 
-                                       source_emotion_list_config_key, # örn: "FER_EMOTIONS"
-                                       target_emotion_list_config_key, # örn: "TARGET_EMOTIONS"
-                                       source_to_target_map_config_key): # örn: "FER_TO_TARGET_MAP"
-    """
-    Yardımcı fonksiyon: Kaynak modelin olasılıklarını (sözlük) alıp,
-    config'de tanımlı hedef duygu listesine göre sıralanmış bir NumPy vektörüne dönüştürür.
-    Eşleştirme de config'deki haritaya göre yapılır.
-    """
+                                       source_emotion_list_config_key, # e.g., "FER_EMOTIONS"
+                                       target_emotion_list_config_key, # e.g., "TARGET_EMOTIONS"
+                                       source_to_target_map_config_key): # e.g., "FER_TO_TARGET_MAP"
+   
     if source_probs_dict is None:
         return None
 
-    # Config'den ilgili listeleri ve haritayı al
+    # Get the relevant lists and map from config
     try:
         source_emotion_list = getattr(config, source_emotion_list_config_key)
         target_emotion_list = getattr(config, target_emotion_list_config_key)
         source_to_target_map = getattr(config, source_to_target_map_config_key)
     except AttributeError as e:
-        logger.error(f"Config'de beklenen anahtar bulunamadı: {e}. Olasılık eşleştirme yapılamıyor.")
+        logger.error(f"Expected key not found in config: {e}. Cannot perform probability mapping.")
         return None
 
     num_target_classes = len(target_emotion_list)
@@ -40,15 +34,13 @@ def _map_source_probs_to_target_vector(source_probs_dict,
     target_emotion_to_idx = {emotion: i for i, emotion in enumerate(target_emotion_list)}
 
     for source_emotion_name, source_prob in source_probs_dict.items():
-        # Kaynak duyguyu hedef duyguya çevir
+        # Convert the source emotion to the target emotion
         target_emotion_name = source_to_target_map.get(source_emotion_name)
         
         if target_emotion_name and target_emotion_name in target_emotion_to_idx:
             target_idx = target_emotion_to_idx[target_emotion_name]
-            # Aynı hedef duyguya birden fazla kaynak eşlenirse olasılıkları topla.
-            # Bizim config'imizde bu pek olmaz ama genel bir durum.
             target_probs_vector[target_idx] += source_prob
-        # else: Kaynak duygu hedefte yoksa veya eşleşme haritasında yoksa atlanır.
+        
             
     return target_probs_vector
 
@@ -57,11 +49,12 @@ def integrate_emotion_probabilities(face_emotion_probs_dict=None, speech_emotion
                                     strategy=None, weight_fer=None, weight_ser=None,
                                     apply_temporal_smoothing=None, temporal_smoothing_strategy=None):
     """
-    Yüz ve sesten gelen duygu olasılıklarını birleştirerek nihai bir duygu durumu belirler.
-    Zamansal düzeltme de uygulayabilir.
-    Parametreler None ise config'den varsayılanları alır.
+    Combines emotion probabilities from face and voice to determine a final emotional state.
+    Can also apply temporal smoothing.
+    Gets default values from config if parameters are None.
     """
-    # Parametreler için config'den varsayılan değerleri al
+   
+    # Default values for parameters from config
     strategy = strategy if strategy is not None else config.INTEGRATION_STRATEGY
     weight_fer = weight_fer if weight_fer is not None else config.INTEGRATION_WEIGHT_FACE
     weight_ser = weight_ser if weight_ser is not None else config.INTEGRATION_WEIGHT_SPEECH
@@ -77,18 +70,12 @@ def integrate_emotion_probabilities(face_emotion_probs_dict=None, speech_emotion
         "TARGET_EMOTIONS",
         "FER_TO_TARGET_MAP"
     )
-    # SER modelinin çıktısı TARGET_EMOTIONS_ORDERED anahtarlı bir sözlük.
-    # Bunu TARGET_EMOTIONS sıralı bir vektöre çevirmemiz gerekiyor.
-    # _map_source_probs_to_target_vector'ı kullanacağız.
-    # Kaynak listesi TARGET_EMOTIONS_ORDERED, hedef listesi TARGET_EMOTIONS.
-    # Eşleme haritası, TARGET_EMOTIONS_ORDERED'daki her duyguyu kendisine eşler (isimler aynı olduğu için).
-    # Bu haritayı config'de TARGET_EMOTIONS_ORDERED_TO_TARGET_IDENTITY_MAP olarak tanımlayabiliriz
-    # veya burada dinamik olarak oluşturabiliriz. Şimdilik config'e ekleneceğini varsayalım.
+    
     target_probs_ser_vector = _map_source_probs_to_target_vector(
         speech_emotion_probs_dict,
-        "TARGET_EMOTIONS_ORDERED", # Kaynak etiket listesi (config'de olmalı)
-        "TARGET_EMOTIONS",         # Hedef etiket listesi (config'de olmalı)
-        "SER_OUTPUT_TO_TARGET_MAP" # Bu map TARGET_EMOTIONS_ORDERED -> TARGET_EMOTIONS (kendisine) eşlemesi (config'de olmalı)
+        "TARGET_EMOTIONS_ORDERED", # Source label list (should be in config)
+        "TARGET_EMOTIONS",         # Target label list (should be in config)
+        "SER_OUTPUT_TO_TARGET_MAP" # This map TARGET_EMOTIONS_ORDERED -> TARGET_EMOTIONS (self-mapping) (should be in config)
     )
 
     # Case 1: Both modalities are None
@@ -129,7 +116,7 @@ def integrate_emotion_probabilities(face_emotion_probs_dict=None, speech_emotion
             # Fallback: prefer FER, then SER, then unknown
             if target_probs_fer_vector is not None:
                 current_combined_probs_vector = target_probs_fer_vector
-            elif target_probs_ser_vector is not None: # This was 'else' before, changed to elif
+            elif target_probs_ser_vector is not None:
                 current_combined_probs_vector = target_probs_ser_vector
             else: # Should not be reached if the first None-None check is correct
                 if "unknown" in target_emotion_list:
@@ -178,7 +165,6 @@ def integrate_emotion_probabilities(face_emotion_probs_dict=None, speech_emotion
                 except Exception as e:
                     logger.warning(f"Error during moving average temporal smoothing: {e}. Using unsmoothed probabilities.")
                     # final_probs_vector remains current_combined_probs_vector
-            # Add other smoothing strategies here if needed (e.g., exponential_moving_average)
             else:
                 logger.warning(f"Unknown temporal smoothing strategy: {temporal_smoothing_strategy}. Using unsmoothed probabilities.")
         # else: if PROBABILITY_HISTORY is empty, no smoothing can be applied yet.
